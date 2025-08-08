@@ -56,19 +56,17 @@ return [
             'throw' => false,
         ],
 
-'supabase' => [
-    'driver' => 's3',
-    'key' => env('SUPABASE_KEY'),
-    'secret' => env('SUPABASE_SERVICE_ROLE_KEY'),
-    'region' => env('SUPABASE_REGION'),
-    'bucket' => env('SUPABASE_BUCKET'),
-    'url' => sprintf('%s/storage/v1/s3/object/public/%s', env('SUPABASE_URL'), env('SUPABASE_BUCKET')),
-    'endpoint' => sprintf('%s/storage/v1/s3', env('SUPABASE_URL')),
-    'use_path_style_endpoint' => true,
-    'throw' => true,
-],
-
-
+        'supabase' => [
+            'driver' => 's3',
+            'key' => env('SUPABASE_KEY'),
+            'secret' => env('SUPABASE_SERVICE_ROLE_KEY'),
+            'region' => env('SUPABASE_REGION'),
+            'bucket' => env('SUPABASE_BUCKET'),
+            'url' => sprintf('%s/storage/v1/s3/object/public/%s', env('SUPABASE_URL'), env('SUPABASE_BUCKET')),
+            'endpoint' => sprintf('%s/storage/v1/s3', env('SUPABASE_URL')),
+            'use_path_style_endpoint' => true,
+            'throw' => true,
+        ],
     ],
 
     /*
