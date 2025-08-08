@@ -64,17 +64,23 @@ return [
         ],
 
 'pgsql' => env('DATABASE_URL') ?
-    array_merge(
-        parse_url(env('DATABASE_URL')),
-        [
+    (function() {
+        $url = parse_url(env('DATABASE_URL'));
+
+        return [
             'driver' => 'pgsql',
+            'host' => $url['host'] ?? '127.0.0.1',
+            'port' => $url['port'] ?? '5432',
+            'database' => isset($url['path']) ? ltrim($url['path'], '/') : 'forge',
+            'username' => $url['user'] ?? 'forge',
+            'password' => $url['pass'] ?? '',
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'require'),
-        ]
-    )
+        ];
+    })()
     : [
         'driver' => 'pgsql',
         'host' => env('DB_HOST', '127.0.0.1'),
@@ -88,6 +94,7 @@ return [
         'search_path' => 'public',
         'sslmode' => env('DB_SSLMODE', 'require'),
     ],
+
 
 
         'sqlsrv' => [
