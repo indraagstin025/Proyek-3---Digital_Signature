@@ -56,17 +56,15 @@ return [
             'throw' => false,
         ],
 
-// File: config/filesystems.php
-
-'supabase' => [
+    'supabase' => [
     'driver' => 's3',
     'key' => env('SUPABASE_KEY'),
-    'secret' => env('SUPABASE_SECRET_KEY'),
+    'secret' => env('SUPABASE_SERVICE_ROLE_KEY'), // PENTING: Nama variabel diperbaiki di sini
     'region' => env('SUPABASE_REGION'),
     'bucket' => env('SUPABASE_BUCKET'),
     'url' => env('SUPABASE_URL') . '/storage/v1/s3/object/public/' . env('SUPABASE_BUCKET'),
-    'endpoint' => env('SUPABASE_URL'), // <-- Perbaikan di sini
-    'use_path_style_endpoint' => true, // <-- Perbaikan di sini
+    'endpoint' => env('SUPABASE_URL') . '/storage/v1/s3', // PENTING: Endpoint yang benar
+    'use_path_style_endpoint' => true,
     'throw' => true,
 ],
 
