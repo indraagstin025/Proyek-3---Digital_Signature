@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\PasetoHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -40,68 +39,4 @@ public function Register(Request $request)
         'user' => new UserResource($user)
     ], 201);
 }
-
-    /**
-     * Menangani permintaan login pengguna.
-     * Memvalidasi kredensial dan membuat token PASETO jika berhasil.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function Login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Invalid Credentials.'
-            ], 401);
-        }
-
-        $payload = [
-            'sub' => $user->id,
-            'role' => $user->role,
-            'email' => $user->email,
-        ];
-
-        $token = PasetoHelper::createToken($payload);
-
-        return response()->json([
-            'message' => 'Login Berhasil',
-            'user' => new UserResource($user),
-            'token' => $token,
-            'token_type' => 'Bearer',
-        ]);
-    }
-
-    /**
-     * Menangani permintaan logout pengguna.
-     * Menginvalidasi token saat ini dengan menambahkannya ke daftar hitam (blacklist).
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function Logout(Request $request)
-    {
-        $token = $request->bearerToken();
-        if (!$token) {
-            return response()->json(['message' => 'Token tidak ditemukan.'], 401);
-        }
-
-        $remainingTimeInSeconds = PasetoHelper::getRemainingExpiry($token);
-
-
-        if ($remainingTimeInSeconds > 0) {
-            Cache::put('token_blacklist:' . $token, true, $remainingTimeInSeconds);
-        }
-
-        return response()->json([
-            'message' => 'Logout Sukses. Token telah diinvalidasi.'
-        ]);
-    }
 }

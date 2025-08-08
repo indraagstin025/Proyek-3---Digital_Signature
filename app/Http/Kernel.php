@@ -47,12 +47,11 @@ class Kernel extends HttpKernel
 
     ];
 
-    // app/Console/Kernel.php
 
-protected $commands = [
-    //
-    \App\Console\Commands\PasetoKeyGenerate::class,
-];
+
+    protected $commands = [
+
+    ];
 
     /**
      * The application's middleware aliases.
@@ -72,7 +71,7 @@ protected $commands = [
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'auth.paseto' => \App\Http\Middleware\PasetoAuthMiddleware::class,
         'can.admin' => \App\Http\Middleware\CanAdmin::class,
+        'auth.supabase' => \App\Http\Middleware\VerifySupabaseToken::class,
     ];
 }
