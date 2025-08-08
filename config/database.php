@@ -63,39 +63,19 @@ return [
             ]) : [],
         ],
 
-'pgsql' => env('DATABASE_URL') ?
-    (function() {
-        $url = parse_url(env('DATABASE_URL'));
-
-        return [
-            'driver' => 'pgsql',
-            'host' => $url['host'] ?? '127.0.0.1',
-            'port' => $url['port'] ?? '5432',
-            'database' => isset($url['path']) ? ltrim($url['path'], '/') : 'forge',
-            'username' => $url['user'] ?? 'forge',
-            'password' => $url['pass'] ?? '',
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'search_path' => 'public',
-            'sslmode' => env('DB_SSLMODE', 'require'),
-        ];
-    })()
-    : [
-        'driver' => 'pgsql',
-        'host' => env('DB_HOST', '127.0.0.1'),
-        'port' => env('DB_PORT', '5432'),
-        'database' => env('DB_DATABASE', 'forge'),
-        'username' => env('DB_USERNAME', 'forge'),
-        'password' => env('DB_PASSWORD', ''),
-        'charset' => 'utf8',
-        'prefix' => '',
-        'prefix_indexes' => true,
-        'search_path' => 'public',
-        'sslmode' => env('DB_SSLMODE', 'require'),
-    ],
-
-
+'pgsql' => [
+    'driver' => 'pgsql',
+    'host' => env('DB_HOST', '127.0.0.1'),
+    'port' => env('DB_PORT', '5432'),
+    'database' => env('DB_DATABASE', 'forge'),
+    'username' => env('DB_USERNAME', 'forge'),
+    'password' => env('DB_PASSWORD', ''),
+    'charset' => 'utf8',
+    'prefix' => '',
+    'prefix_indexes' => true,
+    'search_path' => 'public',
+    'sslmode' => env('DB_SSLMODE', 'require'),
+],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',

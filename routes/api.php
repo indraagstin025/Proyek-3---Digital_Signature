@@ -42,3 +42,7 @@ Route::middleware('auth.supabase')->group(function () {
 });
 
 Route::post('/supabase-webhook', [WebhookController::class, 'handle']);
+
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok']);
+});
