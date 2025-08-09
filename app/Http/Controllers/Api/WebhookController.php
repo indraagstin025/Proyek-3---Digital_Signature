@@ -21,7 +21,6 @@ class WebhookController extends Controller
                 [
                     'name' => $userData['email'], // Atau nama lain jika ada
                     'password' => Hash::make('a-random-generated-password'), // Password palsu karena tidak digunakan
-                    // Tambahkan kolom lain jika ada, seperti `id_supabase`
                 ]
             );
             Log::info("Pengguna baru disinkronkan: " . $user->email);
